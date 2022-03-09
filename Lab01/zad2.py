@@ -60,3 +60,15 @@ def zad2_f(vec):
 
 print(zad2_f(vector))
 
+def zad2_g(vec):
+    result = []
+    mean_var = mean(vec)
+    sd = 0
+    for item in vec:
+        sd += (item - mean_var) ** 2
+    sd = sqrt(sd/len(vec))
+    for item in vec:
+        result.append((item- mean_var)/sd)
+    return result
+
+print(zad2_g(vector))
