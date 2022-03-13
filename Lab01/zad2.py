@@ -72,3 +72,23 @@ def zad2_g(vec):
     return result
 
 print(zad2_g(vector))
+
+def zad2_h(num):
+    if num in range(0, 101):
+        modulo = num % 10
+        start = num - modulo
+        end = start + 10
+        if num == 100:
+            return ('[{}, {}]'.format(90, 100))
+        if num in range(90, 101):
+            return ('[{}, {}]'.format(start, end))
+        else:
+            return ('[{}, {})'.format(start, end))
+
+print(zad2_h(13))
+print(zad2_h(10))
+print(zad2_h(5))
+print(zad2_h(21))
+print(zad2_h(100))
+print(zad2_h(97))
+print(zad2_h(51))
