@@ -28,7 +28,7 @@ num_genes = 6
 #ile pokolen
 #ilu rodzicow zachowac (kilka procent)
 num_parents_mating = 5
-num_generations = 100
+num_generations = 50
 keep_parents = 2
 
 #jaki typ selekcji rodzicow?

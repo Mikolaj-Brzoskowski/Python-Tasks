@@ -75,6 +75,8 @@ print('Średni czas:', median/10)
 solution, solution_fitness, solution_idx = ga_instance.best_solution()
 print("Parameters of the best solution : {solution}".format(solution=solution))
 print("Fitness value of the best solution = {solution_fitness}".format(solution_fitness=solution_fitness))
+generation = ga_instance.best_solution_generation
+print("Generation of the best solution= {generation}".format(generation=generation))
 
 # #tutaj dodatkowo wyswietlamy sume wskazana przez jedynki
 # prediction = numpy.sum(S*solution)
