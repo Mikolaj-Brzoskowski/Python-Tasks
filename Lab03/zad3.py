@@ -1,22 +1,89 @@
 import pygad
 import numpy
 
-S = [   [1,1,1,1,1,1,1,1,1,1,1,1],
-        [1,2,0,0,1,0,0,0,1,0,0,1],
-        [1,1,1,0,0,0,1,0,1,1,0,1],
-        [1,0,0,0,1,0,1,0,0,0,0,1],
-        [1,0,1,0,1,1,0,0,1,1,0,1],
-        [1,0,0,1,1,0,0,0,1,0,0,1],
-        [1,0,0,0,0,0,1,0,0,0,1,1]]
+maze = [   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 2, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0],
+            [0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0],
+            [0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0],
+            [0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0],
+            [0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0],
+            [0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0],
+            [0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0],
+            [0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0],
+            [0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0],
+            [0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 3, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
 
 #definiujemy parametry chromosomu
 #geny to liczby: 0 lub 1
-gene_space = {'low': 0.0, 'high': 1.0}
+gene_space = [0, 1, 2, 3]
 
 #definiujemy funkcję fitness
 def fitness_func(solution, solution_idx):
-    sum = endurance(*solution)
-    fitness = sum
-    return fitness
+    length = 0
+    start_1 = 1
+    start_2 = 1
+    end = maze[-2][-2]
+    pointer = maze[start_1][start_2]
+    for i in solution:
+        match i:
+            case 0:
+                start_2 += 1
+                pointer = maze[start_1][start_2]
+            case 1:
+                start_1 += 1
+                pointer = maze[start_1][start_2]
+            case 2:
+                start_2 -= 1
+                pointer = maze[start_1][start_2]
+            case 3:
+                start_1 -= 1
+                pointer = maze[start_1][start_2]
+        if pointer == 0:
+            return 0
+        elif pointer == 1:
+            length += 1  
+        elif pointer == end:
+            return length
+    return 0
 
 fitness_function = fitness_func
+
+#ile chromsomĂłw w populacji
+#ile genow ma chromosom
+sol_per_pop = 10000
+num_genes = 30
+
+num_parents_mating = 5
+num_generations = 100
+keep_parents = 2
+
+parent_selection_type = "sss"
+
+crossover_type = "single_point"
+
+mutation_type = "random"
+mutation_percent_genes = 4
+
+ga_instance = pygad.GA(gene_space=gene_space,
+                       num_generations=num_generations,
+                       num_parents_mating=num_parents_mating,
+                       fitness_func=fitness_function,
+                       sol_per_pop=sol_per_pop,
+                       num_genes=num_genes,
+                       parent_selection_type=parent_selection_type,
+                       keep_parents=keep_parents,
+                       crossover_type=crossover_type,
+                       mutation_type=mutation_type,
+                       mutation_percent_genes=mutation_percent_genes
+                       )
+
+ga_instance.run()
+
+solution, solution_fitness, solution_idx = ga_instance.best_solution()
+print("Parameters of the best solution : {solution}".format(solution=solution))
+print("Fitness value of the best solution = {solution_fitness}".format(solution_fitness=solution_fitness))
+generation = ga_instance.best_solution_generation
+print("Generation of the best solution = {generation}".format(generation=generation))
+
+ga_instance.plot_fitness()
