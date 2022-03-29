@@ -20,7 +20,7 @@ gene_space = [0, 1, 2, 3]
 
 #definiujemy funkcję fitness
 def fitness_func(solution, solution_idx):
-    length = 0
+    length = len(solution)
     start_1 = 1
     start_2 = 1
     end = maze[-2][-2]
@@ -40,9 +40,9 @@ def fitness_func(solution, solution_idx):
                 start_1 -= 1
                 pointer = maze[start_1][start_2]
         if pointer == 0:
-            return 0
+            return -1
         elif pointer == 1:
-            length += 1  
+            length -= 1  
         elif pointer == end:
             return length
     return 0
@@ -51,12 +51,15 @@ fitness_function = fitness_func
 
 #ile chromsomĂłw w populacji
 #ile genow ma chromosom
-sol_per_pop = 10000
+sol_per_pop = 1000
 num_genes = 30
 
-num_parents_mating = 5
-num_generations = 100
-keep_parents = 2
+#ile wylaniamy rodzicow do "rozmanazania" (okolo 50% populacji)
+#ile pokolen
+#ilu rodzicow zachowac (kilka procent)
+num_parents_mating = 500
+num_generations = 500
+keep_parents = 50
 
 parent_selection_type = "sss"
 
@@ -82,7 +85,7 @@ ga_instance.run()
 
 solution, solution_fitness, solution_idx = ga_instance.best_solution()
 print("Parameters of the best solution : {solution}".format(solution=solution))
-print("Fitness value of the best solution = {solution_fitness}".format(solution_fitness=solution_fitness))
+print("Steps left in the best solution = {solution_fitness}".format(solution_fitness=solution_fitness))
 generation = ga_instance.best_solution_generation
 print("Generation of the best solution = {generation}".format(generation=generation))
 
