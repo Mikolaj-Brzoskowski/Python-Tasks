@@ -20,32 +20,32 @@ gene_space = [0, 1, 2, 3]
 
 #definiujemy funkcję fitness
 def fitness_func(solution, solution_idx):
-    length = len(solution)
-    start_1 = 1
-    start_2 = 1
-    end = maze[-2][-2]
-    pointer = maze[start_1][start_2]
+    length = 0
+    Y = 1
+    X = 1
+    pointer = maze[Y][X]
     for i in solution:
         match i:
             case 0:
-                start_2 += 1
-                pointer = maze[start_1][start_2]
+                X += 1
+                pointer = maze[Y][X]
             case 1:
-                start_1 += 1
-                pointer = maze[start_1][start_2]
+                Y += 1
+                pointer = maze[Y][X]
             case 2:
-                start_2 -= 1
-                pointer = maze[start_1][start_2]
+                X -= 1
+                pointer = maze[Y][X]
             case 3:
-                start_1 -= 1
-                pointer = maze[start_1][start_2]
-        if pointer == 0:
-            return -1
-        elif pointer == 1:
-            length -= 1  
-        elif pointer == end:
-            return length
-    return 0
+                Y -= 1
+                pointer = maze[Y][X]
+        if pointer == 3 or pointer == 0:
+            break
+        else:
+            length += 1
+    if pointer == 3:
+        return length
+    else:
+        return 0
 
 fitness_function = fitness_func
 
