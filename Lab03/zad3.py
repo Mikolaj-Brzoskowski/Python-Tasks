@@ -49,17 +49,18 @@ def fitness_func(solution, solution_idx):
 
 fitness_function = fitness_func
 
-#ile chromsomĂłw w populacji
+#ile chromsomów w populacji
 #ile genow ma chromosom
-sol_per_pop = 1000
+
+sol_per_pop = 30
 num_genes = 30
 
 #ile wylaniamy rodzicow do "rozmanazania" (okolo 50% populacji)
 #ile pokolen
 #ilu rodzicow zachowac (kilka procent)
-num_parents_mating = 500
-num_generations = 500
-keep_parents = 50
+num_parents_mating = 15
+num_generations = 2000
+keep_parents = 2
 
 parent_selection_type = "sss"
 
