@@ -18,12 +18,14 @@ m = Mesher(func=fx.sphere,
 d = Designer(limits=[(-1,1), (-1,1), (-0.1,1)],
              label=['x-axis', 'y-axis', 'z-axis'])
 
-plot_contour(pos_history=optimizer.pos_history, mesher=m, designer=d, mark=(0,0))
+animation = plot_contour(pos_history=optimizer.pos_history, mesher=m, designer=d, mark=(0,0))
 plt.show()
+animation.save('plot0.gif', writer='imagemagick', fps=10)
+
 
 pos_history_3d = m.compute_history_3d(optimizer.pos_history) # preprocessing
 animation3d = plot_surface(pos_history=pos_history_3d,
                            mesher=m, designer=d,
-                           mark=(0,0,0))  
-
+                           mark=(0,0,0))
 plt.show()
+animation3d.save('plot1.gif', writer='imagemagick', fps=10)
