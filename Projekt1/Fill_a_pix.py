@@ -1,5 +1,6 @@
 import pygad
 import numpy as np
+import matplotlib.pyplot as plt
 
 board_large = [
     [2,-1,3,-1,3,-1,3,-1,4,5,5,4,-1,-1,0],
@@ -27,45 +28,182 @@ board_medium = [
     [-1,-1,4,-1,5,-1,6,-1,-1,3],
     [-1,-1,-1,2,-1,5,-1,-1,-1,-1],
     [4,-1,1,-1,-1,-1,1,1,-1,-1],
-    [4,-1,1,-1,-1,-1,1,-1,4,0],
+    [4,-1,1,-1,-1,-1,1,-1,4,-1],
     [-1,-1,-1,-1,6,-1,-1,-1,-1,4],
     [-1,4,4,-1,-1,-1,-1,4,-1,-1]
 ]
 
 board_small = [
-    [-1,-1,-1,-1,1],
-    [-1,9-1,-1,-1],
-    [-1,8,8,-1,-1,],
-    [-1,-1,-1,-1,4],
-    [4,-1,5,-1,2]
+    [0,-1,4,4,-1],
+    [-1,4,-1,6,-1],
+    [3,-1,7,6,-1],
+    [-1,6,-1,6,5],
+    [-1,-1,-1,-1,3]
     ]
 
 gene_space = [0,1]
-input = (board_small)
+input = (board_large)
 
-#0 i 9 rozpatrywane najpierw
-#potem sprawdzane krawędzie
-#sprawdź czy któraś z liczb spełniona (ilość wolnych = ilość do zamalowania)
-#od największych wartości
+board_small_correct = [
+    [1,1,0,0,1],
+    [1,1,0,0,1],
+    [0,0,1,0,0],
+    [1,0,0,0,1],
+    [0,0,1,0,0]
+]
 
 def fitness_func(solution, solution_idx):
     solution_2d = np.reshape(solution, (len(input),len(input)))
-    index_X = 0
     index_Y = 0
-    for y in solution_2d:
-        for x in solution_2d:
-            
-        
+    fitness = 0                
+    for y in input:
+        index_X = 0
+        for x in y:
+            if x in range(0,10):
+                fitness -= 1
+                if check_around(index_Y, index_X, solution_2d, x):
+                    fitness += 1
+            index_X+=1
+        index_Y+=1
     return fitness
+
+def check_around(index_y, index_x, solution_2d, rule_number):
+    black_squares=0
+    if (index_y > 0) and (index_y < len(solution_2d)-1) and (index_x > 0) and (index_x < len(solution_2d)-1):
+        if solution_2d[index_y-1][index_x-1] == 0:
+            black_squares+=1
+        if solution_2d[index_y-1][index_x] == 0:
+            black_squares+=1
+        if solution_2d[index_y-1][index_x+1] == 0:
+            black_squares+=1
+        if solution_2d[index_y][index_x-1] == 0:
+            black_squares+=1
+        if solution_2d[index_y][index_x] == 0:
+            black_squares+=1
+        if solution_2d[index_y][index_x+1] == 0:
+            black_squares+=1
+        if solution_2d[index_y+1][index_x-1] == 0:
+            black_squares+=1
+        if solution_2d[index_y+1][index_x] == 0:
+            black_squares+=1
+        if solution_2d[index_y+1][index_x+1] == 0:
+            black_squares+=1
+        if black_squares == rule_number:
+            return True
+    elif (index_y == 0) and (index_x == 0):
+        if solution_2d[index_y][index_x] == 0:
+            black_squares+=1
+        if solution_2d[index_y][index_x+1] == 0:
+            black_squares+=1
+        if solution_2d[index_y+1][index_x] == 0:
+            black_squares+=1
+        if solution_2d[index_y+1][index_x+1] == 0:
+            black_squares+=1
+        if black_squares == rule_number:
+            return True
+    elif (index_y == 0) and (index_x == len(solution_2d)-1):
+        if solution_2d[index_y][index_x] == 0:
+            black_squares+=1
+        if solution_2d[index_y][index_x-1] == 0:
+            black_squares+=1
+        if solution_2d[index_y+1][index_x] == 0:
+            black_squares+=1
+        if solution_2d[index_y+1][index_x-1] == 0:
+            black_squares+=1
+        if black_squares == rule_number:
+            return True
+    elif (index_y == len(solution_2d)-1) and (index_x == 0):
+        if solution_2d[index_y][index_x] == 0:
+            black_squares+=1
+        if solution_2d[index_y][index_x+1] == 0:
+            black_squares+=1
+        if solution_2d[index_y-1][index_x] == 0:
+            black_squares+=1
+        if solution_2d[index_y-1][index_x+1] == 0:
+            black_squares+=1
+        if black_squares == rule_number:
+            return True
+    elif (index_y == len(solution_2d)-1) and (index_x == len(solution_2d)-1):
+        if solution_2d[index_y][index_x] == 0:
+            black_squares+=1
+        if solution_2d[index_y][index_x-1] == 0:
+            black_squares+=1
+        if solution_2d[index_y-1][index_x] == 0:
+            black_squares+=1
+        if solution_2d[index_y-1][index_x-1] == 0:
+            black_squares+=1
+        if black_squares == rule_number:
+            return True
+    elif (index_y == 0):
+        if solution_2d[index_y][index_x] == 0:
+            black_squares+=1
+        if solution_2d[index_y][index_x-1] == 0:
+            black_squares+=1
+        if solution_2d[index_y][index_x+1] == 0:
+            black_squares+=1
+        if solution_2d[index_y+1][index_x-1] == 0:
+            black_squares+=1
+        if solution_2d[index_y+1][index_x] == 0:
+            black_squares+=1
+        if solution_2d[index_y+1][index_x+1] == 0:
+            black_squares+=1
+        if black_squares == rule_number:
+            return True
+    elif (index_y == len(solution_2d)-1):
+        if solution_2d[index_y][index_x] == 0:
+            black_squares+=1
+        if solution_2d[index_y][index_x-1] == 0:
+            black_squares+=1
+        if solution_2d[index_y][index_x+1] == 0:
+            black_squares+=1
+        if solution_2d[index_y-1][index_x-1] == 0:
+            black_squares+=1
+        if solution_2d[index_y-1][index_x] == 0:
+            black_squares+=1
+        if solution_2d[index_y-1][index_x+1] == 0:
+            black_squares+=1
+        if black_squares == rule_number:
+            return True
+    elif (index_x == 0):
+        if solution_2d[index_y][index_x] == 0:
+            black_squares+=1
+        if solution_2d[index_y][index_x+1] == 0:
+            black_squares+=1
+        if solution_2d[index_y+1][index_x] == 0:
+            black_squares+=1
+        if solution_2d[index_y+1][index_x+1] == 0:
+            black_squares+=1
+        if solution_2d[index_y-1][index_x] == 0:
+            black_squares+=1
+        if solution_2d[index_y-1][index_x+1] == 0:
+            black_squares+=1
+        if black_squares == rule_number:
+            return True
+    elif (index_x == len(solution_2d)-1):
+        if solution_2d[index_y][index_x] == 0:
+            black_squares+=1
+        if solution_2d[index_y][index_x-1] == 0:
+            black_squares+=1
+        if solution_2d[index_y-1][index_x] == 0:
+            black_squares+=1
+        if solution_2d[index_y-1][index_x-1] == 0:
+            black_squares+=1
+        if solution_2d[index_y+1][index_x] == 0:
+            black_squares+=1
+        if solution_2d[index_y+1][index_x-1] == 0:
+            black_squares+=1
+        if black_squares == rule_number:
+            return True
+    
 
 fitness_function = fitness_func
 
-sol_per_pop = 15
+sol_per_pop = 10
 num_genes = len(input) * len(input)
 
-num_parents_mating = 7
+num_parents_mating = 5
 num_generations = 10000
-keep_parents = 3
+keep_parents = 2
 
 parent_selection_type="sss"
 crossover_type="single_point"
@@ -83,7 +221,8 @@ ga_instance = pygad.GA(gene_space=gene_space,
                        crossover_type=crossover_type,
                        mutation_type=mutation_type,
                        mutation_percent_genes=mutation_percent_genes,
-                       stop_criteria=["reach_0"])
+                        stop_criteria=["reach_0"]
+                    )
 
 ga_instance.run()
 
@@ -95,3 +234,6 @@ print("Generation of the best solution= {generation}".format(generation=generati
 
 #wyswietlenie wykresu: jak zmieniala sie ocena na przestrzeni pokolen
 ga_instance.plot_fitness()
+solution_2d = np.reshape(solution, (len(input),len(input)))
+plt.imshow(solution_2d, cmap='gray')
+plt.show()
