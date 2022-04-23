@@ -21,16 +21,16 @@ board_large = [
     ]
 
 board_medium = [
-    [-1,2,3,-1,-1,0,-1,-1,-1,-1],
-    [-1,-1,-1,-1,3,-1,2,-1,-1,6],
-    [-1,-1,5,-1,5,3,-1,5,7,4],
-    [-1,4,-1,5,-1,5,-1,6,-1,3],
-    [-1,-1,4,-1,5,-1,6,-1,-1,3],
-    [-1,-1,-1,2,-1,5,-1,-1,-1,-1],
-    [4,-1,1,-1,-1,-1,1,1,-1,-1],
-    [4,-1,1,-1,-1,-1,1,-1,4,-1],
-    [-1,-1,-1,-1,6,-1,-1,-1,-1,4],
-    [-1,4,4,-1,-1,-1,-1,4,-1,-1]
+    [-1, 2, 3,-1,-1, 0,-1,-1,-1,-1],
+    [-1,-1,-1,-1, 3,-1, 2,-1,-1, 6],
+    [-1,-1, 5,-1, 5, 3,-1, 5, 7, 4],
+    [-1, 4,-1, 5,-1, 5,-1, 6,-1, 3],
+    [-1,-1, 4,-1, 5,-1, 6,-1,-1, 3],
+    [-1,-1,-1, 2,-1, 5,-1,-1,-1,-1],
+    [ 4,-1, 1,-1,-1,-1, 1, 1,-1,-1],
+    [ 4,-1, 1,-1,-1,-1, 1,-1, 4,-1],
+    [-1,-1,-1,-1, 6,-1,-1,-1,-1, 4],
+    [-1, 4, 4,-1,-1,-1,-1, 4,-1,-1]
 ]
 
 board_small = [
@@ -60,9 +60,8 @@ def fitness_func(solution, solution_idx):
         index_X = 0
         for x in y:
             if x in range(0,10):
-                fitness -= 1
-                if check_around(index_Y, index_X, solution_2d, x):
-                    fitness += 1
+                wrong_squares = check_around(index_Y, index_X, solution_2d, x)
+                fitness -= wrong_squares
             index_X+=1
         index_Y+=1
     return fitness
@@ -88,8 +87,7 @@ def check_around(index_y, index_x, solution_2d, rule_number):
             black_squares+=1
         if solution_2d[index_y+1][index_x+1] == 0:
             black_squares+=1
-        if black_squares == rule_number:
-            return True
+        return abs(black_squares-rule_number)
     elif (index_y == 0) and (index_x == 0):
         if solution_2d[index_y][index_x] == 0:
             black_squares+=1
@@ -99,8 +97,7 @@ def check_around(index_y, index_x, solution_2d, rule_number):
             black_squares+=1
         if solution_2d[index_y+1][index_x+1] == 0:
             black_squares+=1
-        if black_squares == rule_number:
-            return True
+        return abs(black_squares-rule_number)
     elif (index_y == 0) and (index_x == len(solution_2d)-1):
         if solution_2d[index_y][index_x] == 0:
             black_squares+=1
@@ -110,8 +107,7 @@ def check_around(index_y, index_x, solution_2d, rule_number):
             black_squares+=1
         if solution_2d[index_y+1][index_x-1] == 0:
             black_squares+=1
-        if black_squares == rule_number:
-            return True
+        return abs(black_squares-rule_number)
     elif (index_y == len(solution_2d)-1) and (index_x == 0):
         if solution_2d[index_y][index_x] == 0:
             black_squares+=1
@@ -121,8 +117,7 @@ def check_around(index_y, index_x, solution_2d, rule_number):
             black_squares+=1
         if solution_2d[index_y-1][index_x+1] == 0:
             black_squares+=1
-        if black_squares == rule_number:
-            return True
+        return abs(black_squares-rule_number)
     elif (index_y == len(solution_2d)-1) and (index_x == len(solution_2d)-1):
         if solution_2d[index_y][index_x] == 0:
             black_squares+=1
@@ -132,8 +127,7 @@ def check_around(index_y, index_x, solution_2d, rule_number):
             black_squares+=1
         if solution_2d[index_y-1][index_x-1] == 0:
             black_squares+=1
-        if black_squares == rule_number:
-            return True
+        return abs(black_squares-rule_number)
     elif (index_y == 0):
         if solution_2d[index_y][index_x] == 0:
             black_squares+=1
@@ -147,8 +141,7 @@ def check_around(index_y, index_x, solution_2d, rule_number):
             black_squares+=1
         if solution_2d[index_y+1][index_x+1] == 0:
             black_squares+=1
-        if black_squares == rule_number:
-            return True
+        return abs(black_squares-rule_number)
     elif (index_y == len(solution_2d)-1):
         if solution_2d[index_y][index_x] == 0:
             black_squares+=1
@@ -162,8 +155,7 @@ def check_around(index_y, index_x, solution_2d, rule_number):
             black_squares+=1
         if solution_2d[index_y-1][index_x+1] == 0:
             black_squares+=1
-        if black_squares == rule_number:
-            return True
+        return abs(black_squares-rule_number)
     elif (index_x == 0):
         if solution_2d[index_y][index_x] == 0:
             black_squares+=1
@@ -177,8 +169,7 @@ def check_around(index_y, index_x, solution_2d, rule_number):
             black_squares+=1
         if solution_2d[index_y-1][index_x+1] == 0:
             black_squares+=1
-        if black_squares == rule_number:
-            return True
+        return abs(black_squares-rule_number)
     elif (index_x == len(solution_2d)-1):
         if solution_2d[index_y][index_x] == 0:
             black_squares+=1
@@ -192,18 +183,17 @@ def check_around(index_y, index_x, solution_2d, rule_number):
             black_squares+=1
         if solution_2d[index_y+1][index_x-1] == 0:
             black_squares+=1
-        if black_squares == rule_number:
-            return True
+        return abs(black_squares-rule_number)
     
 
 fitness_function = fitness_func
 
-sol_per_pop = 10
+sol_per_pop = 15
 num_genes = len(input) * len(input)
 
-num_parents_mating = 5
+num_parents_mating = 7
 num_generations = 10000
-keep_parents = 2
+keep_parents = 3
 
 parent_selection_type="sss"
 crossover_type="single_point"
