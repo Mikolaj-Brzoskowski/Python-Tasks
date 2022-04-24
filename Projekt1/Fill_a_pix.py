@@ -1,7 +1,11 @@
 import pygad
 import numpy as np
 import matplotlib.pyplot as plt
+import pyswarms as ps
+from pyswarms.utils.plotters import plot_cost_history
+import time
 
+#needed data
 board_large = [
     [2,-1,3,-1,3,-1,3,-1,4,5,5,4,-1,-1,0],
     [-1,-1,-1,3,-1,4,-1,4,-1,-1,-1,-1,-1,-1,-1],
@@ -42,29 +46,14 @@ board_small = [
     ]
 
 gene_space = [0,1]
-input = (board_large)
 
-board_small_correct = [
-    [1,1,0,0,1],
-    [1,1,0,0,1],
-    [0,0,1,0,0],
-    [1,0,0,0,1],
-    [0,0,1,0,0]
-]
-
-def fitness_func(solution, solution_idx):
-    solution_2d = np.reshape(solution, (len(input),len(input)))
-    index_Y = 0
-    fitness = 0                
-    for y in input:
-        index_X = 0
-        for x in y:
-            if x in range(0,10):
-                wrong_squares = check_around(index_Y, index_X, solution_2d, x)
-                fitness -= wrong_squares
-            index_X+=1
-        index_Y+=1
-    return fitness
+# board_small_correct = [
+#     [1,1,0,0,1],
+#     [1,1,0,0,1],
+#     [0,0,1,0,0],
+#     [1,0,0,0,1],
+#     [0,0,1,0,0]
+# ]
 
 def check_around(index_y, index_x, solution_2d, rule_number):
     black_squares=0
@@ -185,6 +174,23 @@ def check_around(index_y, index_x, solution_2d, rule_number):
             black_squares+=1
         return abs(black_squares-rule_number)
     
+#input board that will be solved
+input = (board_large)
+    
+#genetic
+def fitness_func(solution, solution_idx):
+    solution_2d = np.reshape(solution, (len(input),len(input)))
+    index_Y = 0
+    fitness = 0                
+    for y in input:
+        index_X = 0
+        for x in y:
+            if x in range(0,10):
+                wrong_squares = check_around(index_Y, index_X, solution_2d, x)
+                fitness -= wrong_squares
+            index_X+=1
+        index_Y+=1
+    return fitness
 
 fitness_function = fitness_func
 
@@ -214,7 +220,12 @@ ga_instance = pygad.GA(gene_space=gene_space,
                         stop_criteria=["reach_0"]
                     )
 
+
+start = time.time()
+print("hello")
 ga_instance.run()
+end = time.time()
+print(end - start)
 
 solution, solution_fitness, solution_idx = ga_instance.best_solution()
 print("Parameters of the best solution : {solution}".format(solution=solution))
@@ -227,3 +238,63 @@ ga_instance.plot_fitness()
 solution_2d = np.reshape(solution, (len(input),len(input)))
 plt.imshow(solution_2d, cmap='gray')
 plt.show()
+
+
+
+
+#swarms
+
+def fitness_func_swarm(solution):
+    solution_2d = np.reshape(solution, (len(input),len(input)))
+    index_Y = 0
+    fitness = 0                
+    for y in input:
+        index_X = 0
+        for x in y:
+            if x in range(0,10):
+                wrong_squares = check_around(index_Y, index_X, solution_2d, x)
+                fitness += wrong_squares
+            index_X+=1
+        index_Y+=1
+    return fitness
+
+boundary=len(input)*len(input)
+
+options = {'c1': 0.5, 'c2': 0.3, 'w':0.9, 'k':2, 'p':1}
+
+def f(x):
+    return list(map(fitness_func_swarm, x))
+
+optimizer = ps.discrete.BinaryPSO(n_particles=10, dimensions=boundary,
+options=options)
+start = time.time()
+print("hello")
+cost, pos= optimizer.optimize(f, iters=20000, verbose=True)
+end = time.time()
+print(end - start)
+cost_history = optimizer.cost_history
+plot_cost_history(cost_history)
+plt.show()
+solution_2d_swarm = np.reshape(pos, (len(input),len(input)))
+plt.imshow(solution_2d_swarm, cmap='gray')
+plt.show()
+
+# optimizer = ps.discrete.BinaryPSO(n_particles=200, dimensions=boundary,
+# options=options)
+# start = time.time()
+# print("hello")
+# cost, pos= optimizer.optimize(f, iters=1000, verbose=True)
+# end = time.time()
+# print(end - start)
+# cost_history = optimizer.cost_history
+# plot_cost_history(cost_history)
+
+# optimizer = ps.discrete.BinaryPSO(n_particles=500, dimensions=boundary,
+# options=options)
+# start = time.time()
+# print("hello")
+# cost, pos= optimizer.optimize(f, iters=250, verbose=True)
+# end = time.time()
+# print(end - start)
+# cost_history = optimizer.cost_history
+# plot_cost_history(cost_history)
