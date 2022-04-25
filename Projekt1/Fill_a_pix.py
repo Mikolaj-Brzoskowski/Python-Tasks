@@ -198,7 +198,7 @@ sol_per_pop = 15
 num_genes = len(input) * len(input)
 
 num_parents_mating = 7
-num_generations = 10000
+num_generations = 15000
 keep_parents = 3
 
 parent_selection_type="sss"
@@ -258,26 +258,26 @@ def fitness_func_swarm(solution):
         index_Y+=1
     return fitness
 
-boundary=len(input)*len(input)
+# boundary=len(input)*len(input)
 
-options = {'c1': 0.5, 'c2': 0.3, 'w':0.9, 'k':2, 'p':1}
+# options = {'c1': 0.5, 'c2': 0.3, 'w':0.9, 'k':2, 'p':1}
 
-def f(x):
-    return list(map(fitness_func_swarm, x))
+# def f(x):
+#     return list(map(fitness_func_swarm, x))
 
-optimizer = ps.discrete.BinaryPSO(n_particles=10, dimensions=boundary,
-options=options)
-start = time.time()
-print("hello")
-cost, pos= optimizer.optimize(f, iters=20000, verbose=True)
-end = time.time()
-print(end - start)
-cost_history = optimizer.cost_history
-plot_cost_history(cost_history)
-plt.show()
-solution_2d_swarm = np.reshape(pos, (len(input),len(input)))
-plt.imshow(solution_2d_swarm, cmap='gray')
-plt.show()
+# optimizer = ps.discrete.BinaryPSO(n_particles=50, dimensions=boundary,
+# options=options)
+# start = time.time()
+# print("hello")
+# cost, pos= optimizer.optimize(f, iters=5000, verbose=True)
+# end = time.time()
+# print(end - start)
+# cost_history = optimizer.cost_history
+# plot_cost_history(cost_history)
+# plt.show()
+# solution_2d_swarm = np.reshape(pos, (len(input),len(input)))
+# plt.imshow(solution_2d_swarm, cmap='gray')
+# plt.show()
 
 # optimizer = ps.discrete.BinaryPSO(n_particles=200, dimensions=boundary,
 # options=options)
