@@ -198,7 +198,7 @@ sol_per_pop = 15
 num_genes = len(input) * len(input)
 
 num_parents_mating = 7
-num_generations = 15000
+num_generations = 25000
 keep_parents = 3
 
 parent_selection_type="sss"
