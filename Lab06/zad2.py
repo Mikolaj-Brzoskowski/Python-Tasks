@@ -1,25 +1,30 @@
-import pandas as pd
-
-df = pd.read_csv("IO\Lab06\iris.csv", names=['sepallength','sepalwidth','petallength','petalwidth','target'])
-
-from sklearn.preprocessing import StandardScaler
-features = ['sepallength', 'sepalwidth', 'petallength', 'petalwidth']
-# Separating out the features
-x = df.loc[:, features].values
-# Separating out the target
-y = df.loc[:,['target']].values
-# Standardizing the features
-x = StandardScaler().fit_transform(x)
-
+import pandas as pd 
+import numpy as np
+import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
+
+
+url = "https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data"
+
+df = pd.read_csv(url
+                 , names=['sepal length','sepal width','petal length','petal width','target'])
+
+
+features = ['sepal length', 'sepal width', 'petal length', 'petal width']
+x = df.loc[:, features].values
+y = df.loc[:,['target']].values
+x = StandardScaler().fit_transform(x)
+print(pd.DataFrame(data = x, columns = features).head())
+
+
 pca = PCA(n_components=2)
 principalComponents = pca.fit_transform(x)
 principalDf = pd.DataFrame(data = principalComponents
              , columns = ['principal component 1', 'principal component 2'])
 
 finalDf = pd.concat([principalDf, df[['target']]], axis = 1)
-
-import matplotlib.pyplot as plt
+print(finalDf.head(5))
 
 fig = plt.figure(figsize = (8,8))
 ax = fig.add_subplot(1,1,1) 
