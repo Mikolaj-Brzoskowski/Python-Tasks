@@ -3,6 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
+from mpl_toolkits.mplot3d import Axes3D
+from sklearn.datasets import load_iris
 
 
 url = "https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data"
@@ -41,4 +43,22 @@ for target, color in zip(targets,colors):
                , s = 50)
 ax.legend(targets)
 ax.grid()
+plt.show()
+
+
+iris = load_iris()
+target_species = iris.target
+
+x_reduced = PCA(n_components=3).fit_transform(iris.data)
+
+fig = plt.figure()
+axes = Axes3D(fig)
+axes.set_title('Iris Dataset by PCA', size=14)
+axes.set_xlabel('First eigenvector')
+axes.set_ylabel('Second eigenvector')
+axes.set_zlabel('Third eigenvector')
+axes.w_xaxis.set_ticklabels(())
+axes.w_yaxis.set_ticklabels(())
+axes.w_zaxis.set_ticklabels(())
+axes.scatter(x_reduced[:,0],x_reduced[:,1],x_reduced[:,2], c=target_species)
 plt.show()
