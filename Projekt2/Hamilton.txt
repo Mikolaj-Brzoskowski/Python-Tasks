@@ -767,7 +767,7 @@ Silence! A message from the King!
 A message from the King!
 FULL COMPANY
 A message from the King!
-Verse1: KING GEORGE
+Verse1: KING_GEORGE
 You say
 The price of my love’s not a price that you’re willing to pay
 You cry
@@ -784,12 +784,12 @@ Oceans rise, empires fall
 We have seen each other through it all
 And when push comes to shove
 I will send a fully armed battalion to remind you of my love!
-Chorus: KING GEORGE
+Chorus: KING_GEORGE
 Da da da dat da dat da da da da ya da
 Da da dat dat da ya da!
 Da da da dat da dat da da da da ya da
 Da da dat dat da…
-Verse2: KING GEORGE
+Verse2: KING_GEORGE
 You say our love is draining and you can’t go on
 You’ll be the one complaining when I am gone…
 And no, don’t change the subject
@@ -797,7 +797,7 @@ Cuz you’re my favorite subject
 My sweet, submissive subject
 My loyal, royal subject
 Forever and ever and ever and ever and ever…
-Verse3: KING GEORGE
+Verse3: KING_GEORGE
 You’ll be back like before
 I will fight the fight and win the war
 For your love, for your praise
@@ -806,7 +806,7 @@ When you’re gone, I’ll go mad
 So don’t throw away this thing we had
 Cuz when push comes to shove
 I will kill your friends and family to remind you of my love
-Chorus: KING GEORGE
+Chorus: KING_GEORGE
 Da da da dat da dat da da da da ya da
 Da da dat dat da ya da!
 Da da da dat da dat da da da da ya da
@@ -1042,7 +1042,7 @@ HAMILTON
 I am not throwing away my shot!
 WASHINGTON
 Son
-WASHINGON AND COMPANY
+WASHINGTON AND COMPANY
 We are outgunned, outmanned!
 HAMILTON
 You need all the help you can get
@@ -2431,7 +2431,7 @@ MULLIGAN/LAFAYETTE/LAURENS/HAMILTON/WASHINGTON
 We won!
 COMPANY
 The world turned upside down!
-KING GEORGE
+KING_GEORGE
 They say
 The price of my war’s not a price that they’re willing to pay
 Insane
@@ -4115,7 +4115,7 @@ Teach ‘em how!
 Say goodbye!
 Say goodbye!
 One last time!
-KING GEORGE
+KING_GEORGE
 They say
 George Washington’s yielding his power and stepping away
 ‘Zat true?
@@ -4302,7 +4302,7 @@ I’ll write my way out…
 Write ev’rything down, far as I can see…
 I’ll write my way out…
 Overwhelm them with honesty.
-WASHINTON/
+WASHINGTON/
 ELIZA/ANGELICA/
 MARIA
 History has its eyes on you
