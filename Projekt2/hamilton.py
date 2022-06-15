@@ -47,6 +47,9 @@ names = list(set(names))
 fdist = FreqDist(script_no_names)
 print(fdist.most_common(10))
 
+fdist.plot(10,cumulative=False)
+plt.show()
+
 lem = WordNetLemmatizer()
 
 lemmed_words=[]
@@ -68,42 +71,42 @@ for w in filtered_word:
             
 #ocena emocji
 
-sia = SentimentIntensityAnalyzer()
-for key in script_dict:
-    name_neg = 0
-    name_neu = 0
-    name_pos = 0
-    name_comp = 0
-    name_angry = 0
-    name_fear = 0
-    name_happy = 0
-    name_sad = 0
-    name_surprise = 0
-    for word in script_dict[key]:
-        #zliczanie negatywnych / pozytywnych emocji
-        name_pos += sia.polarity_scores(word)["pos"]
-        name_neu += sia.polarity_scores(word)["neu"]
-        name_neg += sia.polarity_scores(word)["neg"]
-        name_comp += sia.polarity_scores(word)["compound"]
-        #zliczanie kontretnych uczuć
-        name_angry += te.get_emotion(word)["Angry"]
-        name_fear += te.get_emotion(word)["Fear"]
-        name_happy += te.get_emotion(word)["Happy"]
-        name_sad += te.get_emotion(word)["Sad"]
-        name_surprise += te.get_emotion(word)["Surprise"]
-    word_count = len(script_dict[key])
-    #emocje
-    average_neg = name_neg / word_count
-    average_neu = name_neu / word_count
-    average_pos = name_pos / word_count
-    average_comp = name_comp / word_count
-    #uczucia
-    average_angry = name_angry / word_count
-    average_fear = name_fear / word_count
-    average_happy = name_happy / word_count
-    average_sad = name_sad / word_count
-    average_surprise = name_surprise / word_count
-    print("Average neg/pos scores for " + key + ", neg: " + str(average_neg) + ", neu: " + 
-          str(average_neu) + ", pos: " + str(average_pos) + ", compound: " + str(average_comp))
-    print("Average emotion scores for " + key + ", angry: " + str(average_angry) + ", fear: " + 
-          str(average_fear) + ", happy: " + str(average_happy) + ", sad: " + str(average_sad) + ", surprise: " + str(average_surprise))
+# sia = SentimentIntensityAnalyzer()
+# for key in script_dict:
+#     name_neg = 0
+#     name_neu = 0
+#     name_pos = 0
+#     name_comp = 0
+#     name_angry = 0
+#     name_fear = 0
+#     name_happy = 0
+#     name_sad = 0
+#     name_surprise = 0
+#     for word in script_dict[key]:
+#         #zliczanie negatywnych / pozytywnych emocji
+#         name_pos += sia.polarity_scores(word)["pos"]
+#         name_neu += sia.polarity_scores(word)["neu"]
+#         name_neg += sia.polarity_scores(word)["neg"]
+#         name_comp += sia.polarity_scores(word)["compound"]
+#         #zliczanie kontretnych uczuć
+#         name_angry += te.get_emotion(word)["Angry"]
+#         name_fear += te.get_emotion(word)["Fear"]
+#         name_happy += te.get_emotion(word)["Happy"]
+#         name_sad += te.get_emotion(word)["Sad"]
+#         name_surprise += te.get_emotion(word)["Surprise"]
+#     word_count = len(script_dict[key])
+#     #emocje
+#     average_neg = name_neg / word_count
+#     average_neu = name_neu / word_count
+#     average_pos = name_pos / word_count
+#     average_comp = name_comp / word_count
+#     #uczucia
+#     average_angry = name_angry / word_count
+#     average_fear = name_fear / word_count
+#     average_happy = name_happy / word_count
+#     average_sad = name_sad / word_count
+#     average_surprise = name_surprise / word_count
+#     print("Average neg/pos scores for " + key + ", neg: " + str(average_neg) + ", neu: " + 
+#           str(average_neu) + ", pos: " + str(average_pos) + ", compound: " + str(average_comp))
+#     print("Average emotion scores for " + key + ", angry: " + str(average_angry) + ", fear: " + 
+#           str(average_fear) + ", happy: " + str(average_happy) + ", sad: " + str(average_sad) + ", surprise: " + str(average_surprise))
